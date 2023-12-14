@@ -24,4 +24,4 @@ regex/\.(py)$
 ```
 
 #### Запуск файла
-![Запуск файла](https://github.com/cyrilliusg/High-School-of-Programming/blob/main/images/screenshots/lesson_8.3.PNG)
+![Запуск файла](https://github.com/cyrilliusg/High-School-of-Programming/blob/main/images/screenshots/lesson_8.3.png)
