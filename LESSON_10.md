@@ -2,6 +2,7 @@
 
 #### После установки MC перешёл в репозиторий с проектами
 
+
 ![Первый запуск](https://github.com/cyrilliusg/High-School-of-Programming/blob/main/images/screenshots/lesson_8.1.PNG)
 
  Открыл главный файл с 8 урока с пакетами в режиме редактирования MC, и добавил новую строку:
