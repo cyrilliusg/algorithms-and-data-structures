@@ -1,5 +1,6 @@
 ## Отчёт по запуску скриптов из midnight commander на WSL
 
+
 #### После установки MC перешёл в репозиторий с проектами
 
 ![Первый запуск](https://github.com/cyrilliusg/High-School-of-Programming/blob/main/images/screenshots/lesson_8.1.PNG)
