@@ -1,9 +1,22 @@
 import unittest
 from sorting import bubble_sort
 import random
+import pytest
+
+
+@pytest.mark.repeat(3)
+def test_random_sample():
+    test_arr = random.sample(range(-1000, 1000), 20)
+    target_arr = test_arr.copy()
+    bubble_sort(test_arr)
+    assert test_arr == sorted(target_arr)
 
 
 def repeat_test(times):
+    """
+    кастомный декоратор для повтора вызова функции times раз
+    """
+
     def repeat(func):
         def wrapper(*args, **kwargs):
             for _ in range(times):
@@ -14,7 +27,7 @@ def repeat_test(times):
     return repeat
 
 
-class TestStringMethods(unittest.TestCase):
+class UnitTestSortMethods(unittest.TestCase):
     """
     Тест пузырьковой сортировки
 
@@ -26,12 +39,11 @@ class TestStringMethods(unittest.TestCase):
     5. пустой список
     """
 
-    @repeat_test(times=5)
+    @pytest.mark.repeat(3)
     def test_random_sample(self):
         test_arr = random.sample(range(-1000, 1000), 20)
         self.comparing(test_arr)
 
-    @repeat_test(times=5)
     def test_reverse_sorted_sample(self):
         test_arr = random.sample(range(-1000, 1000), 20)
         test_arr.sort()
@@ -42,7 +54,6 @@ class TestStringMethods(unittest.TestCase):
         test_arr = [0] * 10
         self.comparing(test_arr)
 
-    @repeat_test(times=5)
     def test_sorted_sample(self):
         test_arr = random.sample(range(-1000, 1000), 20)
         test_arr.sort()
@@ -50,7 +61,6 @@ class TestStringMethods(unittest.TestCase):
 
     def test_empty_list(self):
         test_arr = []
-        test_arr.sort()
         self.comparing(test_arr)
 
     def comparing(self, test_arr):
@@ -59,4 +69,7 @@ class TestStringMethods(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    # тестируем библиотекой pytest
+    test_random_sample()
+    # тестируем библиотекой unittest
     unittest.main()
