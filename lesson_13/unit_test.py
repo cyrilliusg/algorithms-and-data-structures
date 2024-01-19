@@ -39,7 +39,6 @@ class UnitTestSortMethods(unittest.TestCase):
     5. пустой список
     """
 
-    @pytest.mark.repeat(3)
     def test_random_sample(self):
         test_arr = random.sample(range(-1000, 1000), 20)
         self.comparing(test_arr)
