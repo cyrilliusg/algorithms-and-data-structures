@@ -42,9 +42,28 @@ class RandomKeyValueGenerator:
         # возвращаем числа, повторяющиеся не менее N раз
         return [num for num, count in count_dict.items() if count >= N]
 
+    def find_repeated_values_within_one_iteration(self, input_list, N):
+        """
+        Возвращает значения из списка, которые повторяются минимум N раз.
+
+        :param input_list: Список для анализа
+        :param N: Минимальное количество повторений для включения в результат
+        """
+        count_dict = {}  # словарь для подсчета количества каждого элемента
+        result = []
+        for num in input_list:
+            count_dict[num] = count_dict.get(num, 0) + 1  # подсчет элементов
+            if count_dict[num] == N:
+                result.append(num)
+
+        # возвращаем числа, повторяющиеся не менее N раз
+        return result
+
 
 if __name__ == '__main__':
     pair_generator = RandomKeyValueGenerator()
-    pair_generator.generate_random_pairs()
+    # pair_generator.generate_random_pairs()
     # Пример вызова find_repeated_values с произвольными значениями
-    pair_generator.find_repeated_values(random.sample(range(1, 10), 100), 10)
+    sample = random.choices(range(1, 11), k=100)
+    print(pair_generator.find_repeated_values_within_one_iteration(sample, 10))
+    print(pair_generator.find_repeated_values(sample, 10))
