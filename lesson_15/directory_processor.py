@@ -34,7 +34,7 @@ class DirectoryProcessor:
 
     def get_result(self, dir_path: str, end_file: str, flag: bool) -> list:
         """
-        Получает результат обработки заданного каталога.
+        Ищет каталоги и файлы по указанному пути и расширению. Опционально: анализирует вложенные каталоги
 
         Args:
             dir_path (str): Путь к каталогу.
@@ -45,7 +45,10 @@ class DirectoryProcessor:
             list: Список из двух списков имён файлов и подкаталогов.
         """
         self._check_directory_exists(dir_path)
-        end_file = self._add_dot_to_extension(end_file)
+
+        # если окончание файла передано пустой строкой, то поиск любых файлов
+        if end_file != '':
+            end_file = self._add_dot_to_extension(end_file)
 
         result_files = []
         result_dirs = []
@@ -59,10 +62,14 @@ class DirectoryProcessor:
         for dir_path in target_dirs:
             for obj in os.listdir(dir_path):
                 obj_path = os.path.join(dir_path, obj)
+                if os.path.isdir(obj_path):
+                    result_dirs.append(obj)
+                    continue  # вместо else проставил continue для читаемости
+                if end_file == '':  # если окончание файла - пустая строка, то все файлы добавить
+                    result_files.append(obj)
+                    continue  # вместо else проставил continue для читаемости
                 if obj_path.endswith(end_file):
                     result_files.append(obj)
-                elif os.path.isdir(obj_path):
-                    result_dirs.append(obj)
 
         return [result_files, result_dirs]
 
@@ -78,19 +85,19 @@ class DirectoryProcessor:
         """
         self._check_directory_exists(directory_path)
 
-        for root, dirs, files in os.walk(directory_path):
-            if dirs:
+        directory_info = self.get_result(directory_path, '', False)
+        if directory_info[1]:  # если список с подкаталогами не пустой
+            return False
+
+        for file_name in directory_info[0]:
+            try:
+                file_path = os.path.join(directory_path, file_name)
+                os.unlink(file_path)
+            except Exception as e:
+                print(f"Ошибка при удалении файла: {e}")
                 return False
-            if files:
-                for file in files:
-                    try:
-                        file_path = os.path.join(root, file)
-                        os.unlink(file_path)
-                    except Exception as e:
-                        print(f"Ошибка при удалении файла: {e}")
-                        return False
-            os.rmdir(directory_path)
-            return True
+        os.rmdir(directory_path)
+        return True
 
     def create_temp_dir(self, folder_name, flag=True):
         """
