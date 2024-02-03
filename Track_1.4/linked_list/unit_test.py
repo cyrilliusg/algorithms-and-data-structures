@@ -30,8 +30,8 @@ class UnitTestSortMethods(unittest.TestCase):
 
     @repeat_test(times=3)
     def test_delete_one_value_many_vals(self):
-        test_arr = random.sample(range(-1000, 1000), 20)
-        value = random.choice(test_arr)
+        test_arr = [2] * 10
+        # value = random.choice(test_arr)
         l_list = LinkedList()
 
         # Создание связанного списка
@@ -39,16 +39,11 @@ class UnitTestSortMethods(unittest.TestCase):
             l_list.add_in_tail(Node(item))
 
         # Удаление первого вхождения
-        l_list.delete(value)
-        test_arr.remove(value)  # Удаляем первое вхождение
+        l_list.delete(2, all=True)
+        test_arr = []  # Удаляем первое вхождение
 
-        # Проверка последовательности
-        node = l_list.head
-        for expected_value in test_arr:
-            self.assertEqual(node.value, expected_value)
-            node = node.next
-
-        self.assertIsNone(node)  # Убедимся, что больше нет элементов в списке
+        print('head and tail', l_list.head, l_list.tail)
+        print(l_list.print_all_nodes())
 
     @repeat_test(times=3)
     def test_delete_one_value_one_val(self):

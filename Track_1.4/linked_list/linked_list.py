@@ -46,14 +46,16 @@ class LinkedList:
         if self.head is None:
             return
 
+        # if all values in list are same and flag is True
         while self.head and self.head.value == val:
+            self.head = self.head.next
             if not all:  # If we delete only first value
-                self.head = self.head.next
                 if self.head is None:  # If after deleting the list is empty
                     self.tail = None
                 return
-            # If first element are equal after deleting all entries
-            self.head = self.head.next
+            if self.head is None:
+                self.tail = None
+                return
 
         node = self.head
         previous_node = None
