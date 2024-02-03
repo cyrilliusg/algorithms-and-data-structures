@@ -84,8 +84,8 @@ class LinkedList:
                 # if don't equal to desired
                 previous_node, node = node, node.next  # previous becomes current, current becomes next
 
-    if self.tail and self.tail.value == val:
-        self.tail = previous_node
+        if self.tail and self.tail.value == val:
+            self.tail = previous_node
 
     def clean(self):
         if self.head is None:
