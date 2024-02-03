@@ -79,35 +79,26 @@ class LinkedList:
             self.tail = self.head
 
     def clean(self):
-        if self.head is None:
-            return
-
-        while self.head is not None:
-            next_node = self.head.next
-            del self.head
-            self.head = next_node
+        self.head = None
+        self.tail = None
 
     def len(self):
-        if self.head is None:
-            return 0
-
+        length = 0
         node = self.head
-        length = 1
-
         while node is not None:
-            next_node = node.next
-
-            if next_node is None:
-                return length
-            else:
-                length += 1
-                node = node.next
+            length += 1
+            node = node.next
+        return length
 
     def insert(self, afterNode, newNode):
         if afterNode is None:
             # put first
             newNode.next, self.head = self.head, newNode
+            if self.tail is None:  # If the list was empty, then we update tail
+                self.tail = newNode
         else:
             newNode.next, afterNode.next = afterNode.next, newNode
+            if afterNode == self.tail:  # If we inserted after the last node, then update tail
+                self.tail = newNode
 
         return
