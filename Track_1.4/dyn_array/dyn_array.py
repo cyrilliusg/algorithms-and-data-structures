@@ -54,12 +54,14 @@ class DynArray:
         if i < 0 or i >= self.count:
             raise IndexError('Index is out of bounds')
 
-        if self.capacity / 2 < self.count - 1:
+        if self.count - 1 < self.capacity / 2:
             new_size = int(self.capacity / 1.5)
             self.resize(16 if new_size < 16 else new_size)
 
-        for j in range(i, self.count - 1):
-            self.array[j] = self.array[j + 1]
+        # maybe something like:
+        # for j in range(i, self.count - 1):
+        #     self.array[j] = self.array[j + 1]
+        self.array[i:self.count - 1] = self.array[i + 1:self.count]
 
         self.count -= 1
 
