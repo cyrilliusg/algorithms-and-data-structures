@@ -8,9 +8,9 @@ class Node:
 
 class LinkedList2:
 
-    def __init__(self):
-        self.head = None
-        self.tail = None
+    def __init__(self, head=None, tail=None):
+        self.head = head
+        self.tail = tail
 
     def add_in_tail(self, item):
         if self.head is None:
