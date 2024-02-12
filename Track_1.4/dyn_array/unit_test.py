@@ -1,5 +1,4 @@
 import unittest
-import logging
 from dyn_array import DynArray
 
 
