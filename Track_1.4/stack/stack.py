@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, Any
 
 
 class Stack:
@@ -8,21 +8,15 @@ class Stack:
     def size(self) -> int:
         return len(self.stack)
 
-    def pop(self) -> Union[None, any]:
-        value = None
-
+    def pop(self) -> Union[None, Any]:
         if self.size() > 0:
-            value = self.stack[0]
-            self.stack = self.stack[1:]
+            return self.stack.pop()  # Удаляет и возвращает последний элемент списка
+        return None
 
-        return value
+    def push(self, value: Any):
+        self.stack.append(value)  # Добавляет элемент в конец списка
 
-    def push(self, value: any):
-        self.stack.append(value)
-
-    def peek(self) -> Union[None, any]:
-        value = None
+    def peek(self) -> Union[None, Any]:
         if self.size() > 0:
-            value = self.stack[0]
-
-        return value
+            return self.stack[-1]  # Возвращает последний элемент списка без его удаления
+        return None
