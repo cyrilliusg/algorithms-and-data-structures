@@ -10,13 +10,13 @@ class Stack:
 
     def pop(self) -> Union[None, Any]:
         if self.size() > 0:
-            return self.stack.pop()  # Удаляет и возвращает последний элемент списка
+            return self.stack.pop()
         return None
 
     def push(self, value: Any):
-        self.stack.append(value)  # Добавляет элемент в конец списка
+        self.stack.append(value)
 
     def peek(self) -> Union[None, Any]:
         if self.size() > 0:
-            return self.stack[-1]  # Возвращает последний элемент списка без его удаления
+            return self.stack[-1]
         return None
