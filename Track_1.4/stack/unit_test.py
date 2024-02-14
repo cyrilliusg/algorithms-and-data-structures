@@ -1,34 +1,17 @@
 import unittest
-from stack import Stack, ReversedStack
+from reversed_stack import Stack, ReversedStack
 import random
-
-
-def repeat_test(times):
-    """
-    кастомный декоратор для повтора вызова функции times раз
-    """
-
-    def repeat(func):
-        def wrapper(*args, **kwargs):
-            for _ in range(times):
-                func(*args, **kwargs)
-
-        return wrapper
-
-    return repeat
 
 
 class UnitTestDynArray(unittest.TestCase):
     """
-    Тест методов динамического массива
+    Тест методов стэка
 
     Рассмотрим следующие случаи:
-    -- вставка элемента, когда в итоге размер буфера не превышен (проверьте также размер буфера);
-    -- вставка элемента, когда в результате превышен размер буфера (проверьте также корректное изменение размера буфера);
-    -- попытка вставки элемента в недопустимую позицию;
-    -- удаление элемента, когда в результате размер буфера остаётся прежним (проверьте также размер буфера);
-    -- удаление элемента, когда в результате понижается размер буфера (проверьте также корректное изменение размера буфера);
-    -- попытка удаления элемента в недопустимой позиции.
+    -- тестирование push
+    -- тестирование pop
+    -- тестирование peek
+    В Обычном и Реверснутом стэке
     """
 
     def test_push(self):
@@ -40,8 +23,6 @@ class UnitTestDynArray(unittest.TestCase):
 
         for item in test_arr:
             stack.push(item)
-
-        test_arr.reverse()
 
         for i in range(len(test_arr)):
             self.assertEqual(test_arr[i], stack.stack[i])
@@ -58,6 +39,7 @@ class UnitTestDynArray(unittest.TestCase):
         for item in test_arr:
             stack.push(item)
 
+        test_arr.reverse()
         for i in range(len(test_arr)):
             self.assertEqual(test_arr[i], stack.pop())
 
@@ -72,6 +54,8 @@ class UnitTestDynArray(unittest.TestCase):
 
         for item in test_arr:
             stack.push(item)
+
+        test_arr.reverse()
 
         for i in range(len(test_arr)):
             self.assertEqual(test_arr[i], stack.peek())
@@ -89,6 +73,8 @@ class UnitTestDynArray(unittest.TestCase):
         for item in test_arr:
             stack.push(item)
 
+        test_arr.reverse()
+
         for i in range(len(test_arr)):
             self.assertEqual(test_arr[i], stack.stack[i])
 
@@ -103,7 +89,7 @@ class UnitTestDynArray(unittest.TestCase):
 
         for item in test_arr:
             stack.push(item)
-
+        test_arr.reverse()
         for i in range(len(test_arr)):
             self.assertEqual(test_arr[i], stack.pop())
 
@@ -118,7 +104,7 @@ class UnitTestDynArray(unittest.TestCase):
 
         for item in test_arr:
             stack.push(item)
-
+        test_arr.reverse()
         for i in range(len(test_arr)):
             self.assertEqual(test_arr[i], stack.peek())
             stack.pop()
