@@ -3,7 +3,7 @@ from reversed_stack import Stack, ReversedStack
 import random
 
 
-class UnitTestDynArray(unittest.TestCase):
+class UnitTestStack(unittest.TestCase):
     """
     Тест методов стэка
 
