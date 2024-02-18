@@ -7,10 +7,10 @@ class StackQueue:
         self.in_stack = Stack()  # для внесения значений
         self.out_stack = Stack()  # для выдачи значений
 
-    def enqueue(self, item):
+    def enqueue(self, item: Any):
         self.in_stack.push(item)  # Просто добавляем элемент в "входной" стек
 
-    def dequeue(self):
+    def dequeue(self) -> Any:
         # Если "выходной" стек пуст, перекладываем все элементы из "входного" стека в "выходной"
         if self.out_stack.size() == 0:
             while self.in_stack.size() > 0:
@@ -18,7 +18,7 @@ class StackQueue:
         # Возвращаем верхний элемент из "выходного" стека
         return self.out_stack.pop()
 
-    def size(self):
+    def size(self) -> int:
         # Размер очереди равен сумме размеров обоих стеков
         return self.in_stack.size() + self.out_stack.size()
 
