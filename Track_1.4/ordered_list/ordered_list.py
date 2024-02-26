@@ -21,7 +21,7 @@ class OrderedList:
         if v1 > v2:
             return 1
 
-    def add(self, value):
+    def add(self, value: int):
         new_node = Node(value)
         node = self.head
 
@@ -126,7 +126,3 @@ class OrderedStringList(OrderedList):
             return 1
         else:
             return 0
-
-
-if __name__ == '__main__':
-    pass
