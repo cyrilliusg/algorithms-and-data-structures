@@ -24,13 +24,12 @@ class OrderedList:
     def add(self, value):
         new_node = Node(value)
         node = self.head
-        prev = node.prev
 
         if node is None:  # if the list is empty
             self.head = new_node
             self.tail = new_node
             return
-
+        prev = node.prev
         while node is not None:
             comp_result = self.compare(value, node.value)
             if (self.__ascending and comp_result <= 0) or (not self.__ascending and comp_result >= 0):
@@ -118,4 +117,3 @@ class OrderedStringList(OrderedList):
             return 1
         else:
             return 0
-
