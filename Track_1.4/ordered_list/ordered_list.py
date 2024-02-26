@@ -25,63 +25,72 @@ class OrderedList:
         new_node = Node(value)
         node = self.head
 
-        if node is None:  # if the list is empty
+        if self.head is None:  # if the list is empty
             self.head = new_node
             self.tail = new_node
             return
-        prev = node.prev
+
         while node is not None:
             comp_result = self.compare(value, node.value)
             if (self.__ascending and comp_result <= 0) or (not self.__ascending and comp_result >= 0):
-                if prev is None:  # insert in the head
-                    new_node.next = node
-                    node.prev = new_node
+                if node == self.head:  # insert in the head
+                    new_node.next = self.head
+                    self.head.prev = new_node
                     self.head = new_node
-                else:  # insert in the middle
-                    new_node.prev = prev
-                    new_node.next = node
-                    prev.next = new_node
-                    node.prev = new_node
+                    break
+                # insert in the middle
+                new_node.prev = node.prev
+                new_node.next = node
+                node.prev.next = new_node
+                node.prev = new_node
                 break
-                prev = node
-                node = node.next
-            if node is None:  # insert in the end
+
+            node = node.next
+
+            if node is None and \
+                    ((self.__ascending and comp_result == 1) or
+                     (not self.__ascending and comp_result == -1)
+                    ):  # if value is the biggest in the list
                 self.tail.next = new_node
                 new_node.prev = self.tail
                 self.tail = new_node
-        return
 
-    def find(self, val):
+    def find(self, val: int):
         node = self.head
         while node is not None:
             comp_result = self.compare(val, node.value)
-            if (self.__ascending and comp_result > 0) or (not self.__ascending and comp_result < 0):
+            if (self.__ascending and comp_result < 0) or (not self.__ascending and comp_result > 0):
                 break
             if comp_result == 0:
                 return node
             node = node.next
         return None
 
-    def delete(self, val):
+    def delete(self, val: int):
+        if self.head is None:
+            return
+
         node = self.head
+
         while node is not None:
             comp_result = self.compare(val, node.value)
-            if (self.__ascending and comp_result > 0) or (not self.__ascending and comp_result < 0):
+            if (self.__ascending and comp_result < 0) or (not self.__ascending and comp_result > 0):
                 break
-            if comp_result == 0 and node.prev is None and node.next is None:  # if node is head and that's the only item
-                self.head = None
-                self.tail = None
-            if comp_result == 0 and node.prev is None and node.next is not None:  # if node is head and more than 1 item
-                self.head = node.next
-                self.head.prev = None
-            if comp_result == 0 and node.next is None:  # if node is tail
-                self.tail = node.prev
-                self.tail.next = None
-            if comp_result == 0 and node.next is not None:  # if node is in the middle
-                node.prev.next = node.next
-                node.next.prev = node.prev
+
+            if comp_result == 0:
+                if node == self.head:  # if the value is the first
+                    self.head = node.next
+                    if self.head is not None:
+                        self.head.prev = None
+                    else:
+                        self.tail = None  # The list went blank
+                elif node == self.tail:  # if the last one
+                    self.tail = node.prev
+                    self.tail.next = None
+                else:
+                    node.prev.next, node.next.prev = node.next, node.prev
+
             node = node.next
-        return None
 
     def clean(self, asc: bool):
         self.__ascending = asc
@@ -117,3 +126,7 @@ class OrderedStringList(OrderedList):
             return 1
         else:
             return 0
+
+
+if __name__ == '__main__':
+    pass
