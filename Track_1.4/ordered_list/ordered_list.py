@@ -89,6 +89,7 @@ class OrderedList:
                     self.tail.next = None
                 else:
                     node.prev.next, node.next.prev = node.next, node.prev
+                break
 
             node = node.next
 
