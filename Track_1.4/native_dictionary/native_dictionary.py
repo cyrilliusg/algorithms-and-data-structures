@@ -26,13 +26,7 @@ class NativeDictionary:
         self.values[slot_index] = value
 
     def is_key(self, key: str) -> bool:
-        step = 3
-        slot_index = self.hash_fun(key)
-        while self.slots[slot_index] is not None:
-            if self.slots[slot_index] == key:
-                return True
-            slot_index += step  # step up
-        return False
+        return key in self.slots
 
     def get(self, key: str) -> Any:
         step = 3
