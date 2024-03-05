@@ -29,10 +29,6 @@ class NativeDictionary:
         return key in self.slots
 
     def get(self, key: str) -> Any:
-        step = 3
-        slot_index = self.hash_fun(key)
-        while self.slots[slot_index] is not None:
-            if self.slots[slot_index] == key:
-                return self.values[slot_index]
-            slot_index += step  # step up
-        return None
+        if key not in self.slots:
+            return None
+        return self.values[self.slots.index(key)]
