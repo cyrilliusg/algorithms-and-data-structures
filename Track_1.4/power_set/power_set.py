@@ -54,10 +54,10 @@ class PowerSet(HashTable):
         return self.count
 
     def put(self, value):
-        if not self.get(value):  # Изменено для проверки существования элемента перед добавлением
+        if not self.get(value):
             if self.count == self.capacity:
                 self._resize(
-                    self._get_next_prime(2 * self.capacity))  # Удвоение размера и выбор следующего простого числа
+                    self._get_next_prime(2 * self.capacity))
             super().put(value)
             self.count += 1
             return True
@@ -111,15 +111,15 @@ class PowerSet(HashTable):
     def _resize(self, new_size):
         old_slots = self.slots
         self.capacity = new_size
-        self.slots = [None] * self.capacity  # Создаем новую хэш-таблицу увеличенного размера
-        self.count = 0  # Сбрасываем счетчик элементов
+        self.slots = [None] * self.capacity
+        self.count = 0
 
         for item in old_slots:
-            if item is not None:  # Перехеширование и перенос элементов
+            if item is not None:
                 self.put(item)
 
     def _get_next_prime(self, n):
-        # Находит и возвращает первое простое число большее или равное n
+       
         def is_prime(num):
             if num < 2:
                 return False
