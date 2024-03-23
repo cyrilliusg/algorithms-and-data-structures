@@ -24,19 +24,19 @@ calculate_time_complexity, determine_performance - analyze_time_complexity
 save_to_disk, write_to_file, и disk_save - save_file
 // универсальное название метода сохранения файла на диск
 
-linked_list_add, append_node, insert_linked_list - add_node_to_linked_list
+linked_list_add, append_node, insert_linked_list - add_node
 // универсальное название метода добавления узла в связанный список
 
 test_connection, check_connectivity, и verify_conn - test_db_connection
 // универсальное название метода проверки соединения с БД
 
-resize_dyn_array, dyn_array_expand, expand_dyn_size - expand_dym_array
+resize_dyn_array, dyn_array_expand, expand_dyn_size - expand
 // универсальное название метода изменения размера массива
 
 open_file, file_open, и load_file - open_file
 // универсальное название метода считывания данных из файла
 
-search_linked_list, find_in_linked_list - search_in_linked_List
+search_linked_list, find_in_linked_list - search
 // универсальное название метода поиска значения в связанном списке
 
 
