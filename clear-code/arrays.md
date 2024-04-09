@@ -221,3 +221,85 @@ def find_perimeter_and_remove_extra_columns(form_df: pd.DataFrame) -> ModelInter
     return ModelInteractionFeedback(True, value=df_filtered)
 ```
 
+// Аналогично пункту 1 сделал два класса 'ответов' для модели БД и для пользовательского интерфейса:
+
+// 4.
+```python
+class DbOperationResult:
+    def __init__(self, success: bool, value=None, error=None):
+        self.success = success  # Индикатор успеха операции
+        self.value = value  # Значение, возвращаемое операцией, если она успешна
+        self.error = error  # Текст ошибки, если операция не удалась
+
+    def is_successful(self) -> bool:
+        """Возвращает True, если операция была успешной."""
+        return self.success
+
+    def get_value(self) -> Any:
+        """Возвращает значение операции, если она была успешной, иначе None."""
+        if self.success:
+            return self.value
+        return None
+
+    def get_error(self) -> str:
+        """Возвращает текст ошибки, если операция не была успешной."""
+        if not self.success:
+            return self.error
+        return ""
+
+    def __repr__(self):
+        return f"DbOperationResult(is_successful={self.success}, value={self.value}, error={self.error})"
+```
+// 5.
+```python
+class UserInteractionFeedback:
+    """
+    Класс для инкапсуляции результата выбора пользователя.
+
+    Attributes:
+        success (bool): Флаг успеха или неудачи операции.
+        operation_code (str): код действия (внутренний код каждой модели виджета).
+        process_type (str): Тип процесса ('LONG_PROCESS' или 'SHORT_PROCESS').
+        value (Any): Значение результата при успешной операции.
+        error (Any): Текст ошибки при неудаче.
+    """
+
+    def __init__(self, operation_code: str,
+                 process_type: bool = SessionWizardConstants.FAST_PROCESS,
+                 success: bool = True,
+                 value: Any = None,
+                 error: Optional[str] = None):
+
+        self.success = success
+        self.operation_code = operation_code
+        self.process_type = process_type
+        self.value = value
+        self.error = error
+
+    def get_operation_code(self) -> str:
+        """Возвращает код операции"""
+        return self.operation_code
+
+    def is_successful(self) -> bool:
+        """Возвращает True, если операция была успешной."""
+        return self.success
+
+    def get_value(self) -> Any:
+        """Возвращает значение операции, если она была успешной, иначе None."""
+        if self.success:
+            return self.value
+        return None
+
+    def get_error(self) -> str:
+        """Возвращает текст ошибки, если операция не была успешной."""
+        if not self.success:
+            return self.error
+        return ""
+
+    def get_process_type(self) -> bool:
+        """Возвращает тип процесса."""
+        return self.process_type
+
+    def __str__(self):
+        return f"UserInteractionFeedback(is_successful={self.success}, process_type={self.process_type}, value={self.value}, error={self.error})"
+```
