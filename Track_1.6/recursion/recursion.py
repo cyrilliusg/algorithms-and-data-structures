@@ -27,34 +27,39 @@ def length_of_list(checkable_list: list) -> int:
     return 1 + length_of_list(checkable_list)  # прибавляем 1 + вызываем заново
 
 
-def is_palindrome(row: str) -> bool:
-    """Проверяет, является ли строка палиндромом"""
-    # Базовый случай: если строка пустая или длина равна одному (когда число символов - нечётное)
-    if not row or len(row) < 1:
+def is_palindrome(row: str, left_idx=0, right_idx=None) -> bool:
+    """Проверяет, является ли строка палиндромом, используя индексы для проверки символов."""
+    if right_idx is None:
+        right_idx = len(row) - 1  # Инициализируем правый индекс если он не установлен
+
+    # Базовый случай: когда левый индекс больше или равен правому, все сравнения выполнены
+    if left_idx >= right_idx:
         return True
-    # Если крайние значения не равны друг другу
-    if row[0] != row[-1]:
+
+    # Если крайние символы не равны, строка не является палиндромом
+    if row[left_idx] != row[right_idx]:
         return False
-    # Вызываем метод заново без крайних значений
-    return is_palindrome(row[1:-1])
+
+    # Рекурсивно проверяем, уменьшая диапазон
+    return is_palindrome(row, left_idx + 1, right_idx - 1)
 
 
-def print_even_numbers_only(list_of_nums: list) -> None:
-    """Выводит на печать только чётные числа из списка"""
-    if not list_of_nums:
-        return  # Базовый случай: если список пустой
-    if list_of_nums[0] % 2 == 0:
-        print(list_of_nums[0])
-    list_of_nums.pop(0)
-    return print_even_numbers_only(list_of_nums)
+def print_even_numbers_only(list_of_nums: list, index=0) -> None:
+    """Выводит на печать только чётные числа из списка, используя индекс для доступа к элементам."""
+    if index >= len(list_of_nums):  # Базовый случай: если индекс вышел за пределы списка
+        return
+    if list_of_nums[index] % 2 == 0:
+        print(list_of_nums[index])
+    return print_even_numbers_only(list_of_nums, index + 1)
 
 
-def print_values_with_even_indexes(checkable_list: list) -> None:
+def print_values_with_even_indexes(checkable_list: list, index=0) -> None:
     """Выводит на печать только значения только с чётными индексами из списка"""
-    if not checkable_list:
-        return  # Базовый случай: если список пустой
-    print(checkable_list[0])  # печатаем первый (нулевой индекс) элемент
-    print_values_with_even_indexes(checkable_list[2:])  # передаём список без двух крайних элементов
+    if not checkable_list or index >= len(checkable_list):
+        return
+    print(checkable_list[index])  # печатаем первый (нулевой индекс) элемент
+    # увеличиваем индекс + 2 (на потенциально следующий чётный)
+    print_values_with_even_indexes(checkable_list, index + 2)
 
 
 def find_second_max_value_from_list(list_of_nums: list,
