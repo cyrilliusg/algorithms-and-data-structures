@@ -27,53 +27,64 @@ def length_of_list(checkable_list: list) -> int:
     return 1 + length_of_list(checkable_list)  # прибавляем 1 + вызываем заново
 
 
-def is_palindrome(row: str, left_idx, right_idx) -> bool:
-    """Проверяет, является ли строка палиндромом, используя индексы для проверки символов."""
-    if right_idx is None:
-        right_idx = len(row) - 1  # Инициализируем правый индекс если он не установлен
-
+def check_palindrome_recursively(row: str, left_index: int, right_index: int) -> bool:
     # Базовый случай: когда левый индекс больше или равен правому, все сравнения выполнены
-    if left_idx >= right_idx:
+    if left_index >= right_index:
         return True
 
     # Если крайние символы не равны, строка не является палиндромом
-    if row[left_idx] != row[right_idx]:
+    if row[left_index] != row[right_index]:
         return False
 
     # Рекурсивно проверяем, уменьшая диапазон
-    return is_palindrome(row, left_idx + 1, right_idx - 1)
+    return check_palindrome_recursively(row, left_index + 1, right_index - 1)
 
 
-def print_even_numbers_only(list_of_nums: list, index) -> None:
-    """Выводит на печать только чётные числа из списка, используя индекс для доступа к элементам."""
-    if index >= len(list_of_nums):  # Базовый случай: если индекс вышел за пределы списка
+def is_palindrome(input_row: str) -> bool:
+    """Проверяет, является ли строка палиндромом"""
+    start_left_index = 0  # левый индекс по умолчанию 0
+    start_right_index = len(input_row) - 1  # Инициализируем правый индекс
+
+    return check_palindrome_recursively(input_row, start_left_index, start_right_index)
+
+
+def print_even_numbers_only_recursively(list_of_nums: list, current_idx: int) -> None:
+    if current_idx >= len(list_of_nums):  # Базовый случай: если индекс вышел за пределы списка
         return
-    if list_of_nums[index] % 2 == 0:
-        print(list_of_nums[index])
-    return print_even_numbers_only(list_of_nums, index + 1)
+    if list_of_nums[current_idx] % 2 == 0:
+        print(list_of_nums[current_idx])
+    return print_even_numbers_only_recursively(list_of_nums, current_idx + 1)
 
 
-def print_values_with_even_indexes(checkable_list: list, index) -> None:
-    """Выводит на печать только значения только с чётными индексами из списка"""
-    if not checkable_list or index >= len(checkable_list):
+def print_even_numbers_only(input_nums_list: list) -> None:
+    """Выводит на печать только чётные числа из списка"""
+    start_index = 0  # по умолчанию 0
+    return print_even_numbers_only_recursively(input_nums_list, start_index)
+
+
+def print_values_with_even_indexes_recursively(lst: list, current_index: int) -> None:
+    if not lst or current_index >= len(lst):  # Базовый случай: если индекс вышел за пределы списка
         return
-    print(checkable_list[index])  # печатаем первый (нулевой индекс) элемент
+    print(lst[current_index])
     # увеличиваем индекс + 2 (на потенциально следующий чётный)
-    print_values_with_even_indexes(checkable_list, index + 2)
+    current_index += 2
+    return print_values_with_even_indexes_recursively(lst, current_index)
 
 
-def find_second_max_value_from_list(list_of_nums: list,
-                                    curr_idx: int,
-                                    first_largest: Optional[int],
-                                    second_largest: Optional[int]) -> Optional[int]:
-    """Возвращает второе по величине число из списка. Если список меньше двух значений, то вернёт None"""
-    if len(list_of_nums) < 2:
-        return None
+def print_values_with_even_indexes(input_list: list) -> None:
+    """Выводит на печать только значения только с чётными индексами из списка"""
+    start_index = 0  # по умолчанию 0
+    return print_values_with_even_indexes_recursively(input_list, start_index)
 
-    if curr_idx == len(list_of_nums):  # Базовый случай: достигли конца списка
+
+def find_second_max_value_from_list_recursively(list_of_nums: list,
+                                                curr_index: int,
+                                                first_largest: Optional[int],
+                                                second_largest: Optional[int]) -> Optional[int]:
+    if curr_index == len(list_of_nums):  # Базовый случай: достигли конца списка
         return second_largest  # Возвращаем второй максимум
 
-    current_num = list_of_nums[curr_idx]  # Текущее число для сравнения
+    current_num = list_of_nums[curr_index]  # Текущее число для сравнения
 
     # Если текущее число больше или равно известного максимума или максимума пока нет (None)
     if first_largest is None or current_num >= first_largest:
@@ -83,27 +94,44 @@ def find_second_max_value_from_list(list_of_nums: list,
     elif second_largest is None or current_num >= second_largest:
         second_largest = current_num  # Обновляем второй максимум
 
+    curr_index += 1
     # Рекурсивно обрабатываем следующий элемент списка
-    return find_second_max_value_from_list(list_of_nums, curr_idx + 1, first_largest, second_largest)
+    return find_second_max_value_from_list_recursively(list_of_nums, curr_index, first_largest, second_largest)
 
 
-def find_files_in_directories(dir_path: str, files_names_list: Optional[list]) -> list:
-    """Возвращает все файлы из текущего и вложенных каталогов по переданному пути"""
-    if files_names_list is None:
-        files_names_list = []
+def find_second_max_value_from_list(input_list_of_nums: list) -> Optional[int]:
+    """Возвращает второе по величине число из списка. Если список меньше двух значений, то вернёт None"""
+    if len(input_list_of_nums) < 2:
+        return None
 
-    if not dir_path or not os.path.isdir(dir_path):
+    start_index = 0
+    start_first_largest = None
+    start_second_largest = None
+
+    return find_second_max_value_from_list_recursively(input_list_of_nums, start_index,
+                                                       start_first_largest, start_second_largest)
+
+
+def find_files_in_directories_recursively(dir_path: str, files_names_list: Optional[list]) -> list:
+    objects_in_current_directory = os.listdir(dir_path)
+    if not objects_in_current_directory:
         return files_names_list
 
-    current_objects_in_directory = os.listdir(dir_path)
-    if not current_objects_in_directory:
-        return files_names_list
-
-    for dir_obj_name in current_objects_in_directory:
-        full_path = os.path.join(dir_path, dir_obj_name)  # Формируем полный путь к объекту
+    for obj_name in objects_in_current_directory:
+        full_path = os.path.join(dir_path, obj_name)  # Формируем полный путь к объекту
         if os.path.isdir(full_path):
-            find_files_in_directories(full_path, files_names_list)  # Рекурсивный вызов для подкаталога
+            find_files_in_directories_recursively(full_path, files_names_list)  # Рекурсивный вызов для подкаталога
         elif os.path.isfile(full_path):
             files_names_list.append(full_path)  # Добавляем полный путь к файлу
 
     return files_names_list
+
+
+def find_files_in_directories(input_dir_path: str) -> list:
+    """Возвращает все файлы из текущего и вложенных каталогов по переданному пути"""
+    start_files_names_list = []
+
+    if not input_dir_path or not os.path.isdir(input_dir_path):
+        return start_files_names_list
+
+    return find_files_in_directories_recursively(input_dir_path, start_files_names_list)
