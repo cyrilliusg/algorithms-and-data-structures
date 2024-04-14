@@ -79,19 +79,19 @@ def print_values_with_even_indexes(input_list: list) -> None:
 
 def find_second_max_value_from_list_recursively(list_of_nums: list,
                                                 curr_index: int,
-                                                first_largest: Optional[int],
-                                                second_largest: Optional[int]) -> Optional[int]:
+                                                first_largest: int,
+                                                second_largest: int) -> Optional[int]:
     if curr_index == len(list_of_nums):  # Базовый случай: достигли конца списка
         return second_largest  # Возвращаем второй максимум
 
     current_num = list_of_nums[curr_index]  # Текущее число для сравнения
 
     # Если текущее число больше или равно известного максимума или максимума пока нет (None)
-    if first_largest is None or current_num >= first_largest:
+    if current_num >= first_largest:
         first_largest, second_largest = current_num, first_largest  # Обновляем первый и второй максимумы
 
     # Если текущее число меньше первого, но больше или равно второму максимуму
-    elif second_largest is None or current_num >= second_largest:
+    elif current_num >= second_largest:
         second_largest = current_num  # Обновляем второй максимум
 
     curr_index += 1
@@ -104,34 +104,34 @@ def find_second_max_value_from_list(input_list_of_nums: list) -> Optional[int]:
     if len(input_list_of_nums) < 2:
         return None
 
-    start_index = 0
-    start_first_largest = None
-    start_second_largest = None
+    start_index = 2
+    # определяем первоначальные два значения
+    if input_list_of_nums[0] > input_list_of_nums[1]:
+        first_largest, second_largest = input_list_of_nums[0], input_list_of_nums[1]
+    else:
+        first_largest, second_largest = input_list_of_nums[1], input_list_of_nums[0]
 
     return find_second_max_value_from_list_recursively(input_list_of_nums, start_index,
-                                                       start_first_largest, start_second_largest)
+                                                       first_largest, second_largest)
 
 
-def find_files_in_directories_recursively(dir_path: str, files_names_list: Optional[list]) -> list:
-    objects_in_current_directory = os.listdir(dir_path)
-    if not objects_in_current_directory:
+def find_files_in_directories(dir_path: str, files_names_list: Optional[list]) -> list:
+    """Возвращает все файлы из текущего и вложенных каталогов по переданному пути"""
+    if files_names_list is None:
+        files_names_list = []
+
+    if not dir_path or not os.path.isdir(dir_path):
         return files_names_list
 
-    for obj_name in objects_in_current_directory:
-        full_path = os.path.join(dir_path, obj_name)  # Формируем полный путь к объекту
+    current_objects_in_directory = os.listdir(dir_path)
+    if not current_objects_in_directory:
+        return files_names_list
+
+    for dir_obj_name in current_objects_in_directory:
+        full_path = os.path.join(dir_path, dir_obj_name)  # Формируем полный путь к объекту
         if os.path.isdir(full_path):
-            find_files_in_directories_recursively(full_path, files_names_list)  # Рекурсивный вызов для подкаталога
+            find_files_in_directories(full_path, files_names_list)  # Рекурсивный вызов для подкаталога
         elif os.path.isfile(full_path):
             files_names_list.append(full_path)  # Добавляем полный путь к файлу
 
     return files_names_list
-
-
-def find_files_in_directories(input_dir_path: str) -> list:
-    """Возвращает все файлы из текущего и вложенных каталогов по переданному пути"""
-    start_files_names_list = []
-
-    if not input_dir_path or not os.path.isdir(input_dir_path):
-        return start_files_names_list
-
-    return find_files_in_directories_recursively(input_dir_path, start_files_names_list)
