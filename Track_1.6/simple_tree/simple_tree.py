@@ -53,7 +53,7 @@ class SimpleTree:
 
     def FindNodesByValue(self, val):
         result = []
-        if self.Root is None or not self.Root.Children:
+        if self.Root is None:
             return result
 
         stack = [self.Root]
