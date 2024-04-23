@@ -159,3 +159,73 @@ class BST:
             if node.RightChild:
                 stack.append(node.RightChild)
         return count
+
+    def WideAllNodes(self):
+        # This method will use a queue to perform a breadth-first search (BFS)
+        if not self.Root:
+            return []  # If the tree is empty, return an empty list
+
+        queue = [self.Root]  # Start with the root in the queue
+        all_nodes = []  # This list will store the nodes in BFS order
+        while queue:
+            current_node = queue.pop(0)  # Dequeue the front node
+            all_nodes.append(current_node)  # Process the current node
+
+            # Enqueue left child if it exists
+            if current_node.LeftChild:
+                queue.append(current_node.LeftChild)
+
+            # Enqueue right child if it exists
+            if current_node.RightChild:
+                queue.append(current_node.RightChild)
+
+        return all_nodes  # Return the list of all nodes in BFS order
+
+    def DeepAllNodes(self, mode: int) -> tuple:
+        if mode == 0:
+            return tuple(self._in_order(self.Root))
+        elif mode == 1:
+            return tuple(self._post_order(self.Root))
+        elif mode == 2:
+            return tuple(self._pre_order(self.Root))
+        else:
+            return ()
+
+    def _in_order(self, node: BSTNode) -> list:
+        # Traverse the tree in in-order
+        result = []
+        if node is not None:
+            result.extend(self._in_order(node.LeftChild))  # Visit left subtree
+            result.append(node)  # Visit node itself
+            result.extend(self._in_order(node.RightChild))  # Visit right subtree
+        return result
+
+    def _post_order(self, node: BSTNode) -> list:
+        # Traverse the tree in post-order
+        result = []
+        if node is not None:
+            result.extend(self._post_order(node.LeftChild))  # Visit left subtree
+            result.extend(self._post_order(node.RightChild))  # Visit right subtree
+            result.append(node)  # Visit node itself
+        return result
+
+    def _pre_order(self, node: BSTNode) -> list:
+        # Traverse the tree in pre-order
+        result = []
+        if node is not None:
+            result.append(node)  # Visit node itself
+            result.extend(self._pre_order(node.LeftChild))  # Visit left subtree
+            result.extend(self._pre_order(node.RightChild))  # Visit right subtree
+        return result
+
+    def InvertTree(self):
+        if not self.Root:
+            return
+        queue = [self.Root]
+        while queue:
+            node = queue.pop(0)
+            node.LeftChild, node.RightChild = node.RightChild, node.LeftChild
+            if node.LeftChild:
+                queue.append(node.LeftChild)
+            if node.RightChild:
+                queue.append(node.RightChild)
