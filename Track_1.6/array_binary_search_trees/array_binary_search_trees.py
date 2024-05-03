@@ -6,7 +6,7 @@ class aBST:
         self.tree_size = 2 ** (depth + 1) - 1
         self.Tree: list[Optional[int]] = [None] * self.tree_size
 
-    def FindKeyIndex(self, key: int):
+    def FindKeyIndex(self, key: int) -> Optional[int]:
         index = 0
         if self.Tree[index] is None:
             return index
@@ -21,12 +21,13 @@ class aBST:
                 index = 2 * index + 2  # Step up to the right descendant
         return None  # The tree is fully populated, no key found
 
-    def AddKey(self, key: int):
+    def AddKey(self, key: int) -> int:
         index = self.FindKeyIndex(key)
 
         if index is None or index > 0:
-            return
-        if index == 0:
-            self.Tree[index] = key
-        else:
-            self.Tree[-index] = key
+            return -1
+        if index != 0:
+            index = -index
+
+        self.Tree[index] = key
+        return index
