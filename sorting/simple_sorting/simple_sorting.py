@@ -10,8 +10,9 @@ def SelectionSortStep(array: list, i: int):
 
 
 def BubbleSortStep(array: list) -> bool:
+    is_edit = False
     for i in range(len(array) - 1):
         if array[i] > array[i + 1]:
             array[i], array[i + 1] = array[i + 1], array[i]
-            return False
-    return True
+            is_edit = True
+    return not is_edit
