@@ -2,7 +2,6 @@ def ArrayChunk(M: list[int]) -> int:
     arr_len = len(M)
     N_index = arr_len // 2
     N = M[N_index]
-
     i1 = 0
     i2 = arr_len - 1
 
@@ -17,7 +16,7 @@ def ArrayChunk(M: list[int]) -> int:
             continue
 
         if i1 >= i2:
-            return i2
+            return N_index
 
         M[i1], M[i2] = M[i2], M[i1]
         if i1 == N_index:
