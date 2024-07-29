@@ -31,10 +31,10 @@ def ArrayChunk(M, left, right):
                 N_index = i1
 
 
-def quicksort(M: list[int], left: int, right: int):
+def QuickSort(M: list[int], left: int, right: int):
     if left >= right:
         return M
 
     pi = ArrayChunk(M, left, right)
-    quicksort(M, left, pi - 1)
-    quicksort(M, pi + 1, right)
+    QuickSort(M, left, pi - 1)
+    QuickSort(M, pi + 1, right)
