@@ -31,13 +31,14 @@ def ArrayChunk(M: list[int], left: int, right: int) -> int:
                 N_index = i1
 
 
-def QuickSortTailOptimization(M: list[int], left: int, right: int) -> list[int]:
+def QuickSortTailOptimization(M: list[int], left: int, right: int):
     while left < right:
         pi = ArrayChunk(M, left, right)
+
         if pi - left < right - pi:
-            QuickSortTailOptimization(M, left, pi - 1)
             left = pi + 1
+            QuickSortTailOptimization(M, left, pi - 1)
+
         else:
-            QuickSortTailOptimization(M, pi + 1, right)
             right = pi - 1
-    return M
+            QuickSortTailOptimization(M, pi + 1, right)
