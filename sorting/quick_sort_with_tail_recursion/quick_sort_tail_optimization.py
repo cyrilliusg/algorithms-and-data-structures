@@ -31,7 +31,7 @@ def ArrayChunk(M: list[int], left: int, right: int) -> int:
                 N_index = i1
 
 
-def QuickSortTailOptimization(arr, low, high):
+def QuickSortTailOptimization(arr: list[int], low: int, high: int):
     while low < high:
         q = ArrayChunk(arr, low, high)
 
