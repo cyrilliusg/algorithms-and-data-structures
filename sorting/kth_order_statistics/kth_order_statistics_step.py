@@ -32,14 +32,13 @@ def ArrayChunk(M: list[int], left: int, right: int) -> int:
 
 
 def KthOrderStatisticsStep(Array: list, L: int, R: int, k: int) -> list[int]:
-    while L <= R:
+    while True:
         N = ArrayChunk(Array, L, R)
 
         if N == k:
-            break
-        elif N < k:
+            return [L, R]
+
+        if N < k:
             L = N + 1
         else:
             R = N - 1
-
-    return [L, R]
