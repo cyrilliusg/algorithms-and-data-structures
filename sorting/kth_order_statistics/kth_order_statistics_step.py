@@ -31,14 +31,13 @@ def ArrayChunk(M: list[int], left: int, right: int) -> int:
                 N_index = i1
 
 
-def KthOrderStatisticsStep(Array: list, L: int, R: int, k: int) -> list[int]:
-    while True:
-        N = ArrayChunk(Array, L, R)
+def KthOrderStatisticsStep(Array: list[int], L: int, R: int, k: int) -> list:
+    N = ArrayChunk(Array, L, R)
 
-        if N == k:
-            return [L, R]
-
-        if N < k:
-            L = N + 1
-        else:
-            R = N - 1
+    if N == k:
+        return [N, N]
+    
+    if N < k:
+        return [N + 1, R]
+    else:
+        return [L, N - 1]
