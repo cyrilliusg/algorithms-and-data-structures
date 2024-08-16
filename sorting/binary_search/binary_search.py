@@ -9,14 +9,14 @@ class BinarySearch:
         if self.result is not None:
             return
 
+        if self.L > self.R:
+            self.result = False
+            return True
+
         middle_index = (self.L + self.R) // 2
 
         if self.array[middle_index] == N:
             self.result = True
-            return
-
-        if self.L == self.R or abs(self.L - self.R) == 1:
-            self.result = False
             return
 
         if self.array[middle_index] < N:
