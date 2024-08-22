@@ -24,6 +24,12 @@ class BinarySearch:
         elif self.array[middle_index] > N:
             self.Right = middle_index - 1
 
+        if self.Left == self.Right or self.Left == self.Right - 1:
+            if self.array[self.Left] == N or (self.Left != self.Right and self.array[self.Right] == N):
+                self.result = True
+            else:
+                self.result = False
+
     def GetResult(self) -> int:
         if self.result is None:
             return 0
