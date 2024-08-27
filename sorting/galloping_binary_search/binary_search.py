@@ -39,6 +39,7 @@ class BinarySearch:
             return -1
 
     def GallopingSearch(self, sorted_array: list[int], target: int) -> bool:
+        self.array = sorted_array
         if not sorted_array:
             return False
         i = 1
@@ -62,11 +63,10 @@ class BinarySearch:
                 lower_bound = (2 ** (i - 1) - 2) + 1
                 upper_bound = current_index
 
-                binary_search = BinarySearch(sorted_array)
-                binary_search.Left = lower_bound
-                binary_search.Right = upper_bound
-                while binary_search.GetResult() == 0:
-                    binary_search.Step(target)
-                return binary_search.GetResult() == 1
+                self.Left = lower_bound
+                self.Right = upper_bound
+                while self.GetResult() == 0:
+                    self.Step(target)
+                return self.GetResult() == 1
 
-        return sorted_array[current_index] == target
+        return self.array[current_index] == target
