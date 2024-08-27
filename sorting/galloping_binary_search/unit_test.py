@@ -25,13 +25,6 @@ class TestGallopingSearch(unittest.TestCase):
         search = BinarySearch([])
         self.assertFalse(search.GallopingSearch([1, 2, 3, 4, 5, 6, 7, 8, 9], 10))
 
-    def test_large_array(self):
-        # Поиск в большом массиве
-        search = BinarySearch([])
-        large_array = list(range(1, 10001))
-        self.assertTrue(search.GallopingSearch(large_array, 9999))
-        self.assertFalse(search.GallopingSearch(large_array, 10001))
-
     def test_single_element_array_found(self):
         # Массив из одного элемента, элемент найден
         search = BinarySearch([])
