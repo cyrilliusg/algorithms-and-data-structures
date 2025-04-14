@@ -21,15 +21,15 @@ class QueueADT:
     GET_ERR = 2
 
     # Статусы для операции dequeue:
-    DEQUE_NIL = 0
-    DEQUE_OK = 1
-    DEQUE_ERR = 2
+    DEQUEUE_NIL = 0
+    DEQUEUE_OK = 1
+    DEQUEUE_ERR = 2
 
     def __init__(self):
         self.__queue: list = []
         # Инициализация статусных флагов
         self.__get_status: int = self.GET_NIL
-        self.__deque_status: int = self.DEQUE_NIL
+        self.__dequeue_status: int = self.DEQUEUE_NIL
 
     # -------------------- Команды --------------------
     def enqueue(self, item: Any) -> None:
@@ -53,10 +53,10 @@ class QueueADT:
         """
         if self.size() > 0:
             value = self.__queue.pop(0)
-            self.__deque_status = self.DEQUE_OK
+            self.__dequeue_status = self.DEQUEUE_OK
         else:
             value = None
-            self.__deque_status = self.DEQUE_ERR
+            self.__dequeue_status = self.DEQUEUE_ERR
         return value
 
     def clear(self) -> None:
@@ -69,7 +69,7 @@ class QueueADT:
         self.__queue = []
         # Обнуление статусных флагов
         self.__get_status = self.GET_NIL
-        self.__deque_status = self.DEQUE_NIL
+        self.__dequeue_status = self.DEQUEUE_NIL
 
     # -------------------- Запросы --------------------
     def get(self) -> Any:
@@ -86,7 +86,7 @@ class QueueADT:
             self.__get_status = self.GET_ERR
             value = None
         else:
-            self.__get_status = self.DEQUE_OK
+            self.__get_status = self.DEQUEUE_OK
             value = self.__queue[-1]
         return value
 
@@ -102,4 +102,4 @@ class QueueADT:
         return self.__get_status
 
     def get_dequeue_status(self) -> int:
-        return self.__deque_status
+        return self.__dequeue_status
